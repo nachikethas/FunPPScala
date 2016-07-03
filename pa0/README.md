@@ -4,12 +4,14 @@ the file `Lists.scala`. There are two methods in this file that need to be
 implemented (`sum` and `max`).
 ## Running and Testing Code
 In the sbt console, start the Scala REPL by typing *console*.
+
     > console
     [info] Starting scala interpreter...
 
     scala>
 The classes of the assignment are available inside the REPL, so you can
 for instance import all the methods from object *Lists*:
+
     scala> import example.Lists._
     import example.Lists._
 
