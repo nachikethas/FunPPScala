@@ -40,7 +40,7 @@ Let’s start by implementing basic functions on sets.
 ## Queries and Transformations on Sets
 In this part, we are interested in functions used to make requests on
 elements of a set. The first function tests whether a given predicate is
-true for all elements of the set. This forall function has the following
+true for all elements of the set. This `forall` function has the following
 signature:
 
     def forall(s: Set, p: Int => Boolean): Boolean
