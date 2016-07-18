@@ -139,20 +139,31 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
   def filter(p: Tweet => Boolean): TweetSet =
     this.filterAcc(p, new Empty)
 
-  def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = {
-    if (p(elem))
-      left.filterAcc(p, acc.incl(elem)).union(right.filterAcc(p, acc))
-    else
-      left.filterAcc(p, acc).union(right.filterAcc(p, acc))
-  }
-/*
   def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet =
     if (p(elem)) this.remove(elem).filterAcc(p, acc.incl(elem))
     else this.remove(elem).filterAcc(p, acc)
+
+/**
+ * The following implementation works as well, but the above might be
+ * more readable.
+ *
+ * def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = {
+ *  if (p(elem))
+ *    left.filterAcc(p, acc.incl(elem)).union(right.filterAcc(p, acc))
+ *  else
+ *    left.filterAcc(p, acc).union(right.filterAcc(p, acc))
+ *  }
  */
+
   def union(that: TweetSet): TweetSet =
     right.union(left.union(that.incl(elem)))
-//    that.incl(elem).union(left).union(right)
+
+/** Union is a tad tricky. For instance,
+ *
+ *  this.remove(elem).union(that.incl(elem))
+ *
+ *  will fail. It's worthwhile to think, why? :)
+ */
 
   def mostRetweeted = this.mostRetweetedAcc(elem)
 
@@ -221,19 +232,19 @@ object GoogleVsApple {
   val apple = List("ios", "iOS", "iphone", "iPhone", "ipad", "iPad")
 
   lazy val googleTweets: TweetSet =
-    allTweets.filter((tweet: Tweet) =>
-        google.exists((gtext: String) => tweet.text.contains(gtext)))
+    allTweets.filter(tweet =>
+        google.exists(gtext => tweet.text contains gtext))
 
   lazy val appleTweets: TweetSet =
-    allTweets.filter((tweet: Tweet) =>
-        apple.exists((atext: String) => tweet.text.contains(atext)))
+    allTweets.filter(tweet =>
+        apple.exists(atext => tweet.text contains atext))
 
   /**
    * A list of all tweets mentioning a keyword from either apple or google,
    * sorted by the number of retweets.
    */
   lazy val trending: TweetList =
-    googleTweets.union(appleTweets).descendingByRetweet
+    (googleTweets union appleTweets).descendingByRetweet
 
   }
 
