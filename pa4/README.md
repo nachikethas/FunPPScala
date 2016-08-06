@@ -153,7 +153,7 @@ task that should be done using a helper function.
 
 ### Using a Coding Table
 
-The previous function is simple, but very inefficient. You goal is now
+The previous function is simple, but very inefficient. Your goal is now
 to define `quickEncode` which encodes an equivalent representation, but
 more efficiently.
 
@@ -167,7 +167,7 @@ list of pairs.
     type CodeTable = List[(Char, List[Bit])]
 
 The encoding must then be done by accessing the table, via a
-`functioncodeBits`.
+function `codeBits`.
 
     def codeBits(table: CodeTable)(char: Char): List[Bit] = ...
 
@@ -176,6 +176,6 @@ coding tree and constructs the character table.
 
     def convert(t: CodeTree): CodeTable = ...
 
-Implement the function convert by using the function `mergeCodeTablesbelow`:
+Implement the function convert by using the function `mergeCodeTables` below:
 
     def mergeCodeTables(a: CodeTable, b: CodeTable): CodeTable = ...
