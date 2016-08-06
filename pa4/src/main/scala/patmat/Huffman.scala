@@ -246,9 +246,9 @@ object Huffman {
       branch match {
         case Leaf(ch, w) => (ch, acc.reverse) :: Nil
         case Fork(l, r, ch, w) => {
-           val lt = convertIter(l, 0 :: acc)
-           val rt = convertIter(r, 1 :: acc)
-           mergeCodeTables(lt, rt)
+          val lt = convertIter(l, 0 :: acc)
+          val rt = convertIter(r, 1 :: acc)
+          mergeCodeTables(lt, rt)
         }
       }
     }
@@ -271,8 +271,8 @@ object Huffman {
   def quickEncode(tree: CodeTree)(text: List[Char]): List[Bit] = {
      val charBits = codeBits(convert(tree))_
      def quickEncodeIter(chars: List[Char], acc: List[Bit]): List[Bit] = {
-        if (chars.isEmpty) acc.reverse else
-        quickEncodeIter(chars.tail, charBits(chars.head) ::: acc)
+        if (chars.isEmpty) acc else
+        quickEncodeIter(chars.tail, acc ::: charBits(chars.head))
      }
      quickEncodeIter(text, Nil)
   }
