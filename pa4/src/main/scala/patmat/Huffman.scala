@@ -127,8 +127,8 @@ object Huffman {
    */
   def combine(trees: List[CodeTree]): List[CodeTree] =
     if (trees.length < 2) trees else {
-      val node = makeCodeTree(trees.head, trees.tail.head)
-      val (first,last) = trees.tail.tail.partition(n => weight(n) <= weight(node))
+      val node = makeCodeTree(trees(0), trees(1))
+      val (first, last) = (trees drop 2) partition (n => weight(n) < weight(node))
       first ::: node :: last
     }
 
