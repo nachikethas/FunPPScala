@@ -166,11 +166,11 @@ object Anagrams {
    *  Note: There is only one anagram of an empty sentence.
    */
   def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
-    def prepend(pre: Occurrences, suf: List[Sentence]): List[Sentence] = {
-      val preWords = dictionaryByOccurrences(pre)
-      if (preWords.isEmpty || suf == List(Nil)) List(Nil) else for {
-        word <- preWords
-        sentence <- suf
+    def prepend(prefix: Occurrences, suffix: List[Sentence]): List[Sentence] = {
+      val prefixWords = dictionaryByOccurrences(prefix)
+      if (prefixWords.isEmpty || suffix == List(Nil)) List(Nil) else for {
+        word <- prefixWords
+        sentence <- suffix
         if (!sentence.isEmpty)
       } yield word :: sentence
     }
@@ -185,7 +185,6 @@ object Anagrams {
         if (!prefixWords.isEmpty)
       } yield if (suffix.isEmpty) wordSentences(prefix) else prepend(prefix, sentenceA(suffix))
     }.flatten
-
     val anagrams = sentenceA(sentenceOccurrences(sentence))
     if (anagrams.isEmpty) List(Nil) else anagrams
   }
